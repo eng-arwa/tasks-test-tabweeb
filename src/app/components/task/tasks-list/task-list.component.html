@@ -6,7 +6,8 @@
             <p class="text-gray-600 mb-4">
                 Manage your tasks efficiently by viewing, updating statuses, and tracking progress.
             </p>
-          <p-button label="add new task" severity="info"  (onClick)="add()"/>
+          <p-button label="add new task" severity="info" 
+          (onClick)="add()"/>
 
         </div>
 
@@ -82,7 +83,8 @@
                 <p-button label="Completed" severity="success"  (onClick)="changeStatus($event,task,TasksSttausList.Completed)"/>
     
              <p-button label="InProgress" severity="info" (onClick)="changeStatus($event,task,TasksSttausList.InProgress)"/>
-    
+    <p-button icon="pi pi-pencil" severity="help"  (onClick)="edit(task)"/>
+
             </td>
         </tr>
     </ng-template>

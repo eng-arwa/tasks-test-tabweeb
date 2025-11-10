@@ -18,7 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { event } from '@primeuix/themes/aura/timeline';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AddComponent } from '../add/add.component';
+import { AddComponent } from '../add.component/add.component';
 
 @Component({
   selector: 'app-task-list.component',
@@ -139,7 +139,15 @@ export class TaskListComponent implements OnInit {
       },
     });
   }
-
+  edit(task: any) {
+    this.ref = this.dialogService.open(AddComponent, {
+      header: 'Update  Task ',
+      width: '50vw',
+      modal: true,
+      closable: true,
+      data: task,
+    });
+  }
   getSeverity(status: string) {
     switch (status) {
       case 'unqualified':
