@@ -80,10 +80,16 @@
             }
 
             <td>
+                   @if (task.status != 'Completed') {
                 <p-button label="Completed" severity="success"  (onClick)="changeStatus($event,task,TasksSttausList.Completed)"/>
-    
+                   }
+    @if (task.status != 'In Progress') {
              <p-button label="InProgress" severity="info" (onClick)="changeStatus($event,task,TasksSttausList.InProgress)"/>
-    <p-button icon="pi pi-pencil" severity="help"  (onClick)="edit(task)"/>
+    }
+         @if (task.status != 'Completed') {
+
+             <p-button  icon="pi pi-pencil" severity="help"  (onClick)="edit(task)"/>
+         }
 
             </td>
         </tr>
