@@ -1,0 +1,77 @@
+<div class="">
+  <div class="surface-card p-4 border-round shadow-2 w-full md:w-6">
+    <h2 class="text-center mb-4">Add Task</h2>
+
+    <form [formGroup]="taskForm" (ngSubmit)="Submit()" class="flex flex-column gap-3">
+      <div class="flex flex-column gap-2">
+        <label for="title" class="font-medium">Title</label>
+        <input
+          pInputText
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Enter task title"
+          class="p-inputtext-sm"
+        />
+        @if(fc['title'].touched && fc['title'].invalid){
+
+            <small
+              class="p-error"
+            >
+              {{ fc['title'].errors?.['required'] ? 'Title is required' : 'Title must be at least 3 characters' }}
+            </small>
+        }
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="description" class="font-medium">Description</label>
+        <textarea
+          pInputTextarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          placeholder="Enter description"
+        ></textarea>
+        @if (fc['description'].touched && fc['description'].invalid) {
+
+            <small
+              class="p-error"
+            
+            >
+              {{ fc['description'].errors?.['required'] ? 'Description is required' : 'Description must be at least 5 characters' }}
+            </small>
+        }
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="status" class="font-medium">Status</label>
+             <p-autoComplete
+             appendTo="'body'"
+      inputId="status"
+      formControlName="status"
+      [suggestions]="filteredStatuses"
+      (completeMethod)="filterStatus($event)"
+      [dropdown]="true"
+      optionLabel="label"
+      optionValue="value"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="34"
+      placeholder="Select or type status"
+      [showClear]="true"
+    ></p-autoComplete>
+
+     @if(fc['status'].touched && fc['status'].invalid){
+
+         <small
+           class="p-error"
+           
+         >
+           Status is required
+         </small>
+     }
+      </div>
+
+      <button pButton type="submit" label="Add Task" class="w-full mt-3"></button>
+    </form>
+  </div>
+</div>

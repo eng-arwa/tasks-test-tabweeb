@@ -1,0 +1,98 @@
+<div class="h-screen my-auto ">
+    <div class="heading shadow-2 p-4 mb-4 border-round-lg">
+        <h2 class="text-2xl font-bold mb-3 text-primary-900">Task List</h2>
+        <div class="flex align-items-center justify-content-between">
+
+            <p class="text-gray-600 mb-4">
+                Manage your tasks efficiently by viewing, updating statuses, and tracking progress.
+            </p>
+          <p-button label="add new task" severity="info"  (onClick)="add()"/>
+
+        </div>
+
+
+    </div>
+    <p-table
+    #dt
+    [value]="tasks"
+    dataKey="id"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    [globalFilterFields]="globalFilterFields"
+    [tableStyle]="{ 'min-width': '75rem' }"
+>
+    <ng-template #header>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{ col.header }}
+@if( col.field === 'status'  ){
+    
+    <ng-container >
+   <p-columnFilter
+   
+   field="status" matchMode="in"  [showMenu]="false">
+  <ng-template #filter let-value let-filter="filterCallback">
+    <p-multiSelect
+    appendTo="'body'"
+        [options]="statuses"
+        optionLabel="label"
+        optionValue="value"
+        [showClear]="true"
+        display="chip"
+        style="min-width: 12rem"
+        [ngModel]="value"
+        (ngModelChange)="filter($event)"
+    ></p-multiSelect>
+  </ng-template>
+</p-columnFilter>
+
+    </ng-container>
+}
+            </th>
+                            <th>Actions</th>
+
+        </tr>
+    </ng-template>
+
+    <ng-template #body let-task>
+        <tr>
+            @for (col of columns; track $index) {
+
+                <td >
+                    @if (col.field === 'status') {
+                        
+                        <ng-container >
+                            <p-tag [value]="task[col.field]" [severity]="getSeverity(task[col.field])"></p-tag>
+                        </ng-container>
+                    }
+                    @else {
+                        
+                        <ng-container >
+
+                            {{ task[col.field] }}
+                        </ng-container> 
+                     
+                    }
+                </td>
+            }
+
+            <td>
+                <p-button label="Completed" severity="success"  (onClick)="changeStatus($event,task,TasksSttausList.Completed)"/>
+    
+             <p-button label="InProgress" severity="info" (onClick)="changeStatus($event,task,TasksSttausList.InProgress)"/>
+    
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+        <tr>
+            <td [attr.colspan]="columns.length">No tasks found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+<p-toast></p-toast>
+<p-confirm-dialog></p-confirm-dialog>
